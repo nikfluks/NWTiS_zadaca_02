@@ -1,0 +1,39 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <f:view locale="#{lokalizacija.odabraniJezik}"> 
+        <h:head>
+            <title>#{p['index.naslov']}</title>
+            <h:outputStylesheet library="css" name="osnovna.css"></h:outputStylesheet>
+        </h:head>
+    </f:view>
+    <h:body>
+        <h:form class="zaglavljeSvihStranica">
+            <h:commandLink value="#{p['index.veza_slanjePoruke']}" action="#{lokalizacija.saljiPoruku()}"/>
+            &nbsp;
+            <h:commandLink value="#{p['index.veza_pregledPoruka']}" action="#{lokalizacija.pregledPoruka()}"/>
+            &nbsp;
+            <h:commandLink value="#{p['index.veza_pregledDnevnika']}" action="#{lokalizacija.pregledDnevnika()}"/>
+        </h:form>
+        <h1 class="naslov">#{p['index.naslov']}</h1>
+        <h:form class="formaIndex">
+            <h:commandButton class="gumbovi podcrtaj" 
+                             value="#{p['index.hr_jezik']}" 
+                             action="#{lokalizacija.odaberiJezik('hr')}"
+                             rendered="#{lokalizacija.odabraniJezik ne 'hr'}"/>
+            <h:outputText value="&nbsp;&nbsp;" rendered="#{lokalizacija.odabraniJezik ne 'hr'}" />
+            <h:commandButton class="gumbovi podcrtaj" 
+                             value="#{p['index.en_jezik']}" 
+                             action="#{lokalizacija.odaberiJezik('en')}"
+                             rendered="#{lokalizacija.odabraniJezik ne 'en'}"/>
+            <h:outputText value="&nbsp;&nbsp;" rendered="#{lokalizacija.odabraniJezik ne 'en'}" />
+            <h:commandButton class="gumbovi podcrtaj" 
+                             value="#{p['index.de_jezik']}" 
+                             action="#{lokalizacija.odaberiJezik('de')}"
+                             rendered="#{lokalizacija.odabraniJezik ne 'de'}"/>
+        </h:form>
+    </h:body>
+</html>
+

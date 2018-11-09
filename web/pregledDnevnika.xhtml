@@ -1,0 +1,23 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <f:view locale="#{lokalizacija.odabraniJezik}"> 
+    <h:head>
+        <title>#{p['index.veza_pregledDnevnika']}</title>
+        <h:outputStylesheet library="css" name="osnovna.css"></h:outputStylesheet>
+    </h:head>
+    </f:view>
+    <h:body>
+        <h:form class="zaglavljeSvihStranica">
+            <h:commandLink value="#{p['index.naslov']}" action="#{slanjePoruke.promjeniJezik()}"/>
+            &nbsp;
+            <h:commandLink value="#{p['index.veza_slanjePoruke']}" action="#{lokalizacija.saljiPoruku()}"/>
+            &nbsp;
+            <h:commandLink value="#{p['index.veza_pregledPoruka']}" action="#{lokalizacija.pregledPoruka()}"/>
+        </h:form>
+        <h1 class="naslov">#{p['index.veza_pregledDnevnika']}</h1>
+    </h:body>
+</html>
+

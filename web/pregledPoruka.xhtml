@@ -1,0 +1,76 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <f:view locale="#{lokalizacija.odabraniJezik}"> 
+        <h:head>
+            <title>#{p['index.veza_pregledPoruka']}</title>
+            <h:outputStylesheet library="css" name="osnovna.css"></h:outputStylesheet>
+        </h:head>
+    </f:view>
+    <h:body>
+        <h:form class="zaglavljeSvihStranica">
+            <h:commandLink value="#{p['index.naslov']}" action="#{slanjePoruke.promjeniJezik()}"/>
+            &nbsp;
+            <h:commandLink value="#{p['index.veza_slanjePoruke']}" action="#{lokalizacija.saljiPoruku()}"/>
+            &nbsp;
+            <h:commandLink value="#{p['index.veza_pregledDnevnika']}" action="#{lokalizacija.pregledDnevnika()}"/>
+        </h:form>
+        <h1 class="naslov">#{p['index.veza_pregledPoruka']}</h1>
+        <h:form id="formaPregled">
+            <h:outputLabel value="#{p['pregledPoruka.odaberiMapu']}"/>
+            <h:selectOneListbox id="odabranaMapa" size="1" value="#{pregledPoruka.odabranaMapa}">
+                <f:selectItems value="#{pregledPoruka.popisMapa}" 
+                               var="mapa" 
+                               itemLabel="#{mapa.labela}" 
+                               itemValue="#{mapa.vrijednost}"/>            
+            </h:selectOneListbox>
+            &nbsp;
+            <h:commandButton class="gumbovi" value="#{p['pregledPoruka.gumbPromijeni']}"
+                             action="#{pregledPoruka.promjenaMape()}"/>
+            <br/><br/>
+            <h:selectOneListbox size="#{pregledPoruka.brojPorukaZaPrikazati}" value="#{pregledPoruka.odabranaMapa}">
+                <f:selectItems value="#{pregledPoruka.popisPoruka}" 
+                               var="poruka" 
+                               itemLabel="#{poruka.id} : #{poruka.vrijemeSlanja} - #{poruka.vrijemePrijema} - #{poruka.salje} - #{poruka.predmet} - #{poruka.privitak} - #{poruka.vrsta}" 
+                               itemValue="#{poruka.id}" />
+            </h:selectOneListbox>
+            <h:dataTable value="#{pregledPoruka.popisPoruka}" var="o">
+                <h:column>
+                    <f:facet name="header">ID</f:facet>
+                    #{o.id}
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header">Predmet</f:facet>
+                        #{o.predmet}
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header">Privitak</f:facet>
+                        #{o.privitak}
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header">Šalje</f:facet>
+                        #{o.salje}
+                </h:column>
+            </h:dataTable>
+            <br/><br/>
+            <h:outputLabel value="#{p['pregledPoruka.ukupnoPoruka']}"/>
+            <h:outputLabel value="#{pregledPoruka.ukupanBrojPorukaUMapi}"/>
+
+            <h:outputText value="&nbsp;&nbsp;" rendered="#{pregledPoruka.postojiPrethodna}" />
+            <h:commandButton id="gumbPrethodni" class="gumbovi" value="#{p['pregledPoruka.gumbPrethodne']}"
+                             action="#{pregledPoruka.prethodnePoruke()}"
+                             rendered="#{pregledPoruka.postojiPrethodna}"/>
+
+            <h:outputText value="&nbsp;&nbsp;" rendered="#{pregledPoruka.postojiSljedeca}" />
+            <h:commandButton id="gumbSljedeci" class="gumbovi" value="#{p['pregledPoruka.gumbSljedece']}"
+                             action="#{pregledPoruka.sljedecePoruke()}"
+                             rendered="#{pregledPoruka.postojiSljedeca}"/>
+        </h:form>
+    </h:body>
+</html>
+

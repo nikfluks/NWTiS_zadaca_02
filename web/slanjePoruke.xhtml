@@ -1,0 +1,70 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <f:view locale="#{lokalizacija.odabraniJezik}"> 
+        <h:head>
+            <title>#{p['index.veza_slanjePoruke']}</title>
+            <h:outputStylesheet library="css" name="osnovna.css"></h:outputStylesheet>
+        </h:head>
+    </f:view>
+    <h:body>
+        <h:form class="zaglavljeSvihStranica">
+            <h:commandLink value="#{p['index.naslov']}" action="#{slanjePoruke.promjeniJezik()}"/>
+            &nbsp;
+            <h:commandLink value="#{p['index.veza_pregledPoruka']}" action="#{lokalizacija.pregledPoruka()}"/>
+            &nbsp;
+            <h:commandLink value="#{p['index.veza_pregledDnevnika']}" action="#{lokalizacija.pregledDnevnika()}"/>
+        </h:form>
+        <h1 class="naslov">#{p['index.veza_slanjePoruke']}</h1>
+        <h:form id="forma">
+            <h:panelGrid class="zaglavljeMaila" columns="2">
+                <h:outputLabel class="labeleZaglavljaMaila" value="#{p['slanjePoruke.salje']}"/>
+                <h:inputText id="uredeniPosiljatelj" class="inputiZaglavljaMaila" value="#{slanjePoruke.salje}" size="25"/>
+
+                <h:outputLabel class="labeleZaglavljaMaila" value="#{p['slanjePoruke.prima']}"/>
+                <h:inputText id="uredeniPrimatelj" class="inputiZaglavljaMaila" value="#{slanjePoruke.prima}" size="25"/>
+
+                <h:outputLabel class="labeleZaglavljaMaila" value="#{p['slanjePoruke.predmet']}"/>
+                <h:inputText id="uredeniPredmet" class="inputiZaglavljaMaila" value="#{slanjePoruke.predmet}" size="25"/>
+            </h:panelGrid>
+
+            <br/>
+            <h:outputLabel value="#{p['slanjePoruke.poruka']}"/>
+            <br/>
+
+            <h:inputTextarea value="#{slanjePoruke.sadrzajPrivitka}"  
+                             cols="50" rows="10"
+                             id="uredeniSadrzaj"/>
+
+            <h:selectOneListbox class="popisDatoteka" size="5" value="#{slanjePoruke.odabranaDatoteka}">
+                <f:selectItems value="#{slanjePoruke.popisDatoteka}" 
+                               var="c" 
+                               itemLabel="#{c}" 
+                               itemValue="#{c}" />
+            </h:selectOneListbox>
+            <h:commandButton class="gumbUcitaj gumbovi podcrtaj" value="#{p['slanjePoruke.gumbUcitaj']}"
+                             action="#{slanjePoruke.preuzmiSadrzaj()}"/>
+            <br/>
+            <h:commandButton class="gumbSalji gumbovi" value="#{p['slanjePoruke.gumbSalji']}"
+                             action="#{slanjePoruke.saljiPoruku()}"/>
+            &nbsp;
+            <h:commandButton class="gumbObrisi gumbovi podcrtaj" value="#{p['slanjePoruke.gumbObrisi']}"
+                             action="#{slanjePoruke.obrisiPrivitak()}"/>
+
+        </h:form>
+        <br/><br/>
+        <c:if test="#{slanjePoruke.uspjesnoPoslana eq 1}">
+            <h:outputLabel class="uspjesno" value="#{p['slanjePoruke.uspjesnoPoslana']}"/>
+        </c:if>
+        <c:if test="#{slanjePoruke.uspjesnoPoslana eq -1}">
+            <h:outputLabel class="neuspjesno" value="#{p['slanjePoruke.greskaPriSlanju']}"/>
+        </c:if>
+        <c:if test="#{slanjePoruke.validacijaOK eq false}">
+            <h:outputLabel class="neuspjesno" value="#{p['slanjePoruke.neispravniPodaci']}"/>
+        </c:if>
+    </h:body>
+</html>
+
